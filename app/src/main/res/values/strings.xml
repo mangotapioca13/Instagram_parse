@@ -3,10 +3,14 @@
     <string name="username">Username</string>
     <string name="password">Password</string>
     <string name="buttonLogin">Log in</string>
+
     <string name="createNew">Create new account</string>
     <string name="userPrompt">Create a username</string>
     <string name="passPrompt">Create a password</string>
     <string name="emailPrompt">Email address</string>
+
     <string name="buttonCreate">Create</string>
-    <string name="description">Post description</string>
+
+    <string name="buttonCamera">Take photo</string>
+    <string name="description">Write a caption...</string>
 </resources>

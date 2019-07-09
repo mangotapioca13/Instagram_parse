@@ -1,13 +1,12 @@
 package com.example.instagram;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Button;
-import android.widget.EditText;
 
 import com.example.instagram.model.Post;
 import com.parse.FindCallback;
@@ -19,9 +18,7 @@ import java.util.List;
 
 public class HomeActivity extends AppCompatActivity {
 
-    private EditText etDescription;
-    private Button btnCreate;
-    private Button btnTakePhoto;
+    private final String TAG = "HomeActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,34 +27,9 @@ public class HomeActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        etDescription = (EditText) findViewById(R.id.etDescription);
-        btnCreate = (Button) findViewById(R.id.btnCreate);
-        btnTakePhoto = (Button) findViewById(R.id.btnTakePhoto);
-
-        queryPosts();
-
-//        btnCreate.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                final String description = etDescription.getText().toString();
-//                final ParseUser user = ParseUser.getCurrentUser();
-//
-//                final File file = new File(imagePath);
-//                final ParseFile parseFile = new ParseFile(file);
-//
-//                createPost(description, parseFile, user);
-//            }
-//        });
-//
-//        btnRefresh.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                loadTopPosts();
-//            }
-//        });
     }
 
+    // TODO -- this method is never used...
     private void queryPosts() {
         ParseQuery<Post> postQuery = new ParseQuery<Post>(Post.class);
 
@@ -76,66 +48,37 @@ public class HomeActivity extends AppCompatActivity {
 
                 for (int i = 0; i < posts.size(); i++) {
                     Post post = posts.get(i);
-                    Log.d("HomeActivity", "Post: " + post.getDescription()
+                    Log.d(TAG, "Post: " + post.getDescription()
                         + ", Username: " + post.getUser().getUsername());
                 }
             }
         });
     }
 
-//    private void createPost(String description, ParseFile imageFile, ParseUser user) {
-//        final Post newPost = new Post();
-//        newPost.setDescription(description);
-//        newPost.setImage(imageFile);
-//        newPost.setUser(user);
-//
-//        newPost.saveInBackground(new SaveCallback() {
-//            @Override
-//            public void done(ParseException e) {
-//                if (e == null) {
-//                    Log.d("HomeActivity", "Create post success!");
-//                } else {
-//                    e.printStackTrace();
-//                }
-//            }
-//        });
-//    }
-//
-//    public void loadTopPosts() {
-//        // create new Post.Query
-//        final Post.Query postsQuery = new Post.Query();
-//        postsQuery.getTop().withUser();
-//
-//        // grabs all posts in the background thread
-//        postsQuery.findInBackground(new FindCallback<Post>() {
-//            @Override
-//            public void done(List<Post> objects, ParseException e) {
-//                if (e == null) {
-//                    for (int i = 0; i < objects.size(); i++) {
-//                        Log.d("HomeActivity", "Post[" + i + "] = "
-//                                + objects.get(i).getDescription()
-//                                + "\nusername = " + objects.get(i).getUser().getUsername());
-//                    }
-//                } else {
-//                    e.printStackTrace();
-//                }
-//            }
-//        });
-//    }
-
     // methods to handle click on the LogOut menu item
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // inflate the menu; this adds items to the action bar if it is present
-        getMenuInflater().inflate(R.menu.menu_logout, menu);
+        getMenuInflater().inflate(R.menu.menu_home, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Toast.makeText(this, "LogOut Selected", Toast.LENGTH_SHORT).show();
-        ParseUser.logOut();
-        finish();
+        int id = item.getItemId();
+
+        if (id == R.id.miLogOut) {
+            // Toast.makeText(this, "LogOut Selected", Toast.LENGTH_SHORT).show();
+            ParseUser.logOut();
+            Intent intent = new Intent(HomeActivity.this, LoginActivity.class);
+            startActivity(intent);
+            finish();
+            return true;
+        } else if (id == R.id.miCreate) {
+            Intent intent = new Intent(HomeActivity.this, PostActivity.class);
+            startActivity(intent);
+        }
+
         return super.onOptionsItemSelected(item);
     }
 }
