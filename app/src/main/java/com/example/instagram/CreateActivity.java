@@ -17,19 +17,20 @@ public class CreateActivity extends AppCompatActivity {
     private EditText etEmail;
     private EditText etUsername;
     private EditText etPassword;
-    private Button btCreate;
+    private Button btnCreate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create);
 
+
         etEmail = (EditText) findViewById(R.id.etEmail);
         etUsername = (EditText) findViewById(R.id.etUsername);
         etPassword = (EditText) findViewById(R.id.etPassword);
-        btCreate = (Button) findViewById(R.id.btnCreate);
+        btnCreate = (Button) findViewById(R.id.btnCreate);
 
-        btCreate.setOnClickListener(new View.OnClickListener() {
+        btnCreate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 final String email = etEmail.getText().toString();
