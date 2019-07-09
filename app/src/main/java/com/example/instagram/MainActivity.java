@@ -19,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         ParseUser currUser = ParseUser.getCurrentUser();
+
         // if there is a current user, then bring them to their home
         // else bring user to start page for login or create new account
         if (currUser != null) {

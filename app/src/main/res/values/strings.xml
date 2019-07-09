@@ -8,4 +8,5 @@
     <string name="passPrompt">Create a password</string>
     <string name="emailPrompt">Email address</string>
     <string name="buttonCreate">Create</string>
+    <string name="description">Post description</string>
 </resources>
