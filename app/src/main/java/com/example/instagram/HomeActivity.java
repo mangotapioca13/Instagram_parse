@@ -5,7 +5,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.parse.ParseUser;
 
@@ -30,7 +29,7 @@ public class HomeActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Toast.makeText(this, "LogOut Selected", Toast.LENGTH_SHORT).show();
+        // Toast.makeText(this, "LogOut Selected", Toast.LENGTH_SHORT).show();
         ParseUser.logOut();
         finish();
         return super.onOptionsItemSelected(item);
