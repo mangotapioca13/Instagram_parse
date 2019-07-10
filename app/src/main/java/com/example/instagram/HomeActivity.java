@@ -9,6 +9,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.example.instagram.model.Post;
 import com.parse.FindCallback;
@@ -81,7 +82,7 @@ public class HomeActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         if (id == R.id.miLogOut) {
-            // Toast.makeText(this, "LogOut Selected", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "LogOut Selected", Toast.LENGTH_SHORT).show();
             ParseUser.logOut();
             Intent intent = new Intent(HomeActivity.this, LoginActivity.class);
             startActivity(intent);
