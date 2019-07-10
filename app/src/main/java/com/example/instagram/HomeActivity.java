@@ -2,10 +2,10 @@ package com.example.instagram;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -26,32 +26,56 @@ public class HomeActivity extends AppCompatActivity {
     RecyclerView rvPosts;
     PostAdapter postAdapter;
 
+    private BottomNavigationView bottomNavigationView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+//        setSupportActionBar(toolbar);
 
-        Toolbar toolbarTop = (Toolbar) findViewById(R.id.toolbarTop);
+//        Toolbar toolbarTop = (Toolbar) findViewById(R.id.toolbarTop);
 
-        // find RecyclerView and setup
-        // LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-        rvPosts = (RecyclerView) findViewById(R.id.rvPost);
-        // rvPosts.setLayoutManager(linearLayoutManager);
-        rvPosts.setLayoutManager(new LinearLayoutManager(this));
+        bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
 
-        // instantiate the arraylist (data source)
-        postsList = new ArrayList<>();
+//        // find RecyclerView and setup
+//        // LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+//        rvPosts = (RecyclerView) findViewById(R.id.rvPost);
+//        // rvPosts.setLayoutManager(linearLayoutManager);
+//        rvPosts.setLayoutManager(new LinearLayoutManager(this));
+//
+//        // instantiate the arraylist (data source)
+//        postsList = new ArrayList<>();
+//
+//        // construct the adapter form this data source
+//        postAdapter = new PostAdapter(postsList);
+//
+//        // set the adapter
+//        rvPosts.setAdapter(postAdapter);
 
-        // construct the adapter form this data source
-        postAdapter = new PostAdapter(postsList);
+//        queryPosts();
 
-        // set the adapter
-        rvPosts.setAdapter(postAdapter);
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.miHome:
+                        Toast.makeText(HomeActivity.this, "Home!", Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.id.miCompose:
+                        Toast.makeText(HomeActivity.this, "Compose!", Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.id.miProfile:
+                    default:
+                        Toast.makeText(HomeActivity.this, "Profile!", Toast.LENGTH_SHORT).show();
+                        break;
+                }
 
-        queryPosts();
+                return true;
+            }
+        });
     }
 
     private void queryPosts() {
@@ -72,8 +96,8 @@ public class HomeActivity extends AppCompatActivity {
 
                 for (int i = 0; i < posts.size(); i++) {
                     Post post = posts.get(i);
-                     // Log.d(TAG, "Post: " + post.getDescription()
-                     //   + ", Username: " + post.getUser().getUsername());
+                      // Log.d(TAG, "Post: " + post.getDescription()
+                      // + ", url: " + post.getImage().getUrl());
 
                     postsList.add(post);
                     postAdapter.notifyItemInserted(posts.size() - 1);
