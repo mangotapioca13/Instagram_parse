@@ -3,6 +3,8 @@ package com.example.instagram;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
@@ -14,11 +16,14 @@ import com.parse.ParseException;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class HomeActivity extends AppCompatActivity {
 
     private final String TAG = "HomeActivity";
+    ArrayList<Post> posts;
+    RecyclerView rvPosts;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +32,14 @@ public class HomeActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        Toolbar toolbarTop = (Toolbar) findViewById(R.id.toolbarTop);
+
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        rvPosts = (RecyclerView) findViewById(R.id.rvPost);
+        rvPosts.setLayoutManager(linearLayoutManager);
+
+        posts = new ArrayList<>();
     }
 
     // TODO -- this method is never used...
@@ -58,7 +71,7 @@ public class HomeActivity extends AppCompatActivity {
     // methods to handle click on the LogOut menu item
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // inflate the menu; this adds items to the action bar if it is present
+        // inflate the menu; this adds items to the tool bar if it is present
         getMenuInflater().inflate(R.menu.menu_home, menu);
         return true;
     }
