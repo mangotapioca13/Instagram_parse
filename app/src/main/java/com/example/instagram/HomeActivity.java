@@ -6,7 +6,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -23,8 +22,9 @@ import java.util.List;
 public class HomeActivity extends AppCompatActivity {
 
     private final String TAG = "HomeActivity";
-    ArrayList<Post> posts;
+    ArrayList<Post> postsList;
     RecyclerView rvPosts;
+    PostAdapter postAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,14 +36,24 @@ public class HomeActivity extends AppCompatActivity {
 
         Toolbar toolbarTop = (Toolbar) findViewById(R.id.toolbarTop);
 
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        // find RecyclerView and setup
+        // LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         rvPosts = (RecyclerView) findViewById(R.id.rvPost);
-        rvPosts.setLayoutManager(linearLayoutManager);
+        // rvPosts.setLayoutManager(linearLayoutManager);
+        rvPosts.setLayoutManager(new LinearLayoutManager(this));
 
-        posts = new ArrayList<>();
+        // instantiate the arraylist (data source)
+        postsList = new ArrayList<>();
+
+        // construct the adapter form this data source
+        postAdapter = new PostAdapter(postsList);
+
+        // set the adapter
+        rvPosts.setAdapter(postAdapter);
+
+        queryPosts();
     }
 
-    // TODO -- this method is never used...
     private void queryPosts() {
         ParseQuery<Post> postQuery = new ParseQuery<Post>(Post.class);
 
@@ -62,8 +72,11 @@ public class HomeActivity extends AppCompatActivity {
 
                 for (int i = 0; i < posts.size(); i++) {
                     Post post = posts.get(i);
-                    Log.d(TAG, "Post: " + post.getDescription()
-                        + ", Username: " + post.getUser().getUsername());
+                     // Log.d(TAG, "Post: " + post.getDescription()
+                     //   + ", Username: " + post.getUser().getUsername());
+
+                    postsList.add(post);
+                    postAdapter.notifyItemInserted(posts.size() - 1);
                 }
             }
         });
