@@ -4,12 +4,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.example.instagram.fragments.ComposeFragment;
 import com.example.instagram.model.Post;
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -21,11 +24,11 @@ import java.util.List;
 
 public class HomeActivity extends AppCompatActivity {
 
-    private final String TAG = "HomeActivity";
     ArrayList<Post> postsList;
     RecyclerView rvPosts;
     PostAdapter postAdapter;
 
+    private final String TAG = "HomeActivity";
     private BottomNavigationView bottomNavigationView;
 
     @Override
@@ -38,7 +41,6 @@ public class HomeActivity extends AppCompatActivity {
 
 //        Toolbar toolbarTop = (Toolbar) findViewById(R.id.toolbarTop);
 
-        bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
 
 //        // find RecyclerView and setup
 //        // LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
@@ -57,25 +59,39 @@ public class HomeActivity extends AppCompatActivity {
 
 //        queryPosts();
 
+        final FragmentManager fragmentManager = getSupportFragmentManager();
+
+        bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
+
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                Fragment fragment;
+
                 switch (item.getItemId()) {
                     case R.id.miHome:
                         Toast.makeText(HomeActivity.this, "Home!", Toast.LENGTH_SHORT).show();
+                        fragment = new ComposeFragment();
                         break;
                     case R.id.miCompose:
                         Toast.makeText(HomeActivity.this, "Compose!", Toast.LENGTH_SHORT).show();
+                        fragment = new ComposeFragment();
                         break;
                     case R.id.miProfile:
                     default:
+                        // TODO: swap fragment here
                         Toast.makeText(HomeActivity.this, "Profile!", Toast.LENGTH_SHORT).show();
+                        fragment = new ComposeFragment();
                         break;
                 }
 
+                fragmentManager.beginTransaction().replace(R.id.flContainer, fragment).commit();
                 return true;
             }
         });
+
+        // set default selection
+        bottomNavigationView.setSelectedItemId(R.id.miHome);
     }
 
     private void queryPosts() {
