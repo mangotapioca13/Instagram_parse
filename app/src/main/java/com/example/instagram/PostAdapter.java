@@ -11,54 +11,46 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.instagram.model.Post;
+import com.parse.ParseFile;
 
 import java.util.List;
 
 public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
 
-    private List<Post> mPosts;
-    Context context;
+    private Context context;
+    private List<Post> mPostsList;
 
-    // pass in the posts array into the constructor
-    public PostAdapter(List<Post> posts) {
-        mPosts = posts;
+    public PostAdapter(Context context, List<Post> posts) {
+        this.context = context;
+        this.mPostsList = posts;
     }
 
-
+    // with the data at the given position, bind it to the holder
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Post post = mPosts.get(position);
-
-        // populate the views according to this data
-        holder.tvUserName.setText(post.getUser().getUsername());
-
-        Glide.with(context)
-                .load(post.getImage().getUrl())
-                .into(holder.ivPostImage);
+        Post post = mPostsList.get(position);
+        holder.bind(post);
     }
 
     @Override
     public int getItemCount() {
-        return mPosts.size();
+        return mPostsList.size();
     }
 
+    // creates one individual row in the recycler view
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        context = parent.getContext();
-        LayoutInflater inflater = LayoutInflater.from(context);
-
-        View postView = inflater.inflate(R.layout.item_post, parent, false);
-        ViewHolder viewHolder = new ViewHolder(postView);
-
-        return viewHolder;
+        View view = LayoutInflater.from(context).inflate(R.layout.item_post, parent, false);
+        return new ViewHolder(view);
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        public TextView tvUserName;
-        public TextView tvTimeAgo;
-        public ImageView ivPostImage;
+        private TextView tvUserName;
+        private TextView tvTimeAgo;
+        private TextView tvDescription;
+        private ImageView ivPostImage;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -66,7 +58,20 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
             // perform findViewById lookups
             tvUserName = (TextView) itemView.findViewById(R.id.tvUsername);
             tvTimeAgo = (TextView) itemView.findViewById(R.id.tvTimeAgo);
+            tvDescription = (TextView) itemView.findViewById(R.id.tvDescription);
             ivPostImage = (ImageView) itemView.findViewById(R.id.ivPostImage);
+        }
+
+        public void bind(Post post) {
+            tvUserName.setText(post.getUser().getUsername());
+            tvDescription.setText(post.getDescription());
+
+            ParseFile image = post.getImage();
+            if (image != null) {
+                Glide.with(context)
+                        .load(image.getUrl())
+                        .into(ivPostImage);
+            }
         }
     }
 }

@@ -79,7 +79,7 @@ public class ComposeFragment extends Fragment {
                 ParseUser user = ParseUser.getCurrentUser();
 
                 if (photoFile == null || ivPostImage.getDrawable() == null) {
-                    Log.e(TAG, "No photo to sbubmit");
+                    Log.e(TAG, "No photo to submit");
                     Toast.makeText(getContext(), "There is no photo!", Toast.LENGTH_SHORT).show();
                     return;
                 }

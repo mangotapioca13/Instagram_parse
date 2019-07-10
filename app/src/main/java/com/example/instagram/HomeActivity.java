@@ -7,26 +7,15 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.example.instagram.fragments.ComposeFragment;
-import com.example.instagram.model.Post;
-import com.parse.FindCallback;
-import com.parse.ParseException;
-import com.parse.ParseQuery;
+import com.example.instagram.fragments.PostsFragment;
 import com.parse.ParseUser;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class HomeActivity extends AppCompatActivity {
-
-    ArrayList<Post> postsList;
-    RecyclerView rvPosts;
-    PostAdapter postAdapter;
 
     private final String TAG = "HomeActivity";
     private BottomNavigationView bottomNavigationView;
@@ -35,29 +24,6 @@ public class HomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-
-//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-//        setSupportActionBar(toolbar);
-
-//        Toolbar toolbarTop = (Toolbar) findViewById(R.id.toolbarTop);
-
-
-//        // find RecyclerView and setup
-//        // LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-//        rvPosts = (RecyclerView) findViewById(R.id.rvPost);
-//        // rvPosts.setLayoutManager(linearLayoutManager);
-//        rvPosts.setLayoutManager(new LinearLayoutManager(this));
-//
-//        // instantiate the arraylist (data source)
-//        postsList = new ArrayList<>();
-//
-//        // construct the adapter form this data source
-//        postAdapter = new PostAdapter(postsList);
-//
-//        // set the adapter
-//        rvPosts.setAdapter(postAdapter);
-
-//        queryPosts();
 
         final FragmentManager fragmentManager = getSupportFragmentManager();
 
@@ -70,17 +36,13 @@ public class HomeActivity extends AppCompatActivity {
 
                 switch (item.getItemId()) {
                     case R.id.miHome:
-                        Toast.makeText(HomeActivity.this, "Home!", Toast.LENGTH_SHORT).show();
-                        fragment = new ComposeFragment();
+                        fragment = new PostsFragment();
                         break;
                     case R.id.miCompose:
-                        Toast.makeText(HomeActivity.this, "Compose!", Toast.LENGTH_SHORT).show();
                         fragment = new ComposeFragment();
                         break;
                     case R.id.miProfile:
                     default:
-                        // TODO: swap fragment here
-                        Toast.makeText(HomeActivity.this, "Profile!", Toast.LENGTH_SHORT).show();
                         fragment = new ComposeFragment();
                         break;
                 }
@@ -92,34 +54,6 @@ public class HomeActivity extends AppCompatActivity {
 
         // set default selection
         bottomNavigationView.setSelectedItemId(R.id.miHome);
-    }
-
-    private void queryPosts() {
-        ParseQuery<Post> postQuery = new ParseQuery<Post>(Post.class);
-
-        // specify what you want to include by referencing the key
-        postQuery.include(Post.KEY_USER);
-
-        // use findInBackground instead of find since you don't want to take up the UI / main thread
-        // with expensive operations (making a network call)
-        postQuery.findInBackground(new FindCallback<Post>() {
-            @Override
-            public void done(List<Post> posts, ParseException e) {
-                if (e != null) {
-                    e.printStackTrace();
-                    return;
-                }
-
-                for (int i = 0; i < posts.size(); i++) {
-                    Post post = posts.get(i);
-                      // Log.d(TAG, "Post: " + post.getDescription()
-                      // + ", url: " + post.getImage().getUrl());
-
-                    postsList.add(post);
-                    postAdapter.notifyItemInserted(posts.size() - 1);
-                }
-            }
-        });
     }
 
     // methods to handle click on the LogOut menu item
