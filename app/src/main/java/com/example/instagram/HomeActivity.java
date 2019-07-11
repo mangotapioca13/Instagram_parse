@@ -79,9 +79,6 @@ public class HomeActivity extends AppCompatActivity {
             startActivity(intent);
             finish();
             return true;
-        } else if (id == R.id.miCreate) {
-            Intent intent = new Intent(HomeActivity.this, PostActivity.class);
-            startActivity(intent);
         }
 
         return super.onOptionsItemSelected(item);
