@@ -37,6 +37,11 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
         return mPostsList.size();
     }
 
+    public void clear() {
+        mPostsList.clear();
+        notifyDataSetChanged();
+    }
+
     // creates one individual row in the recycler view
     @NonNull
     @Override

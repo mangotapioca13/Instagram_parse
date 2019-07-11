@@ -38,20 +38,4 @@ public class Post extends ParseObject {
     public void setUser(ParseUser user) {
         put(KEY_USER, user);
     }
-
-//    public static class Query extends ParseQuery<Post> {
-//        public Query() {
-//            super(Post.class);
-//        }
-//
-//        public Query getTop() {
-//            setLimit(20);
-//            return this;
-//        }
-//
-//        public Query withUser() {
-//            include("user");
-//            return this;
-//        }
-//    }
 }

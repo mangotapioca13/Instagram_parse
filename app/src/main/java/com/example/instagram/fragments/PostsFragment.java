@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -26,6 +27,7 @@ public class PostsFragment extends Fragment {
     private RecyclerView rvPosts;
     protected PostAdapter postAdapter;
     protected List<Post> mPostsList;
+    private SwipeRefreshLayout swipeContainer;
 
     // onCreateView to inflate the view
     @Nullable
@@ -37,6 +39,7 @@ public class PostsFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         rvPosts = (RecyclerView) view.findViewById(R.id.rvPosts);
+        swipeContainer = (SwipeRefreshLayout) view.findViewById(R.id.swipeContainer);
 
         // create the data source
         mPostsList = new ArrayList<>();
@@ -49,6 +52,24 @@ public class PostsFragment extends Fragment {
 
         // set the layout manager on the recycler view
         rvPosts.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        // setup refresh listener which triggers new data loading
+        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                // Your code to refresh the list here.
+                // Make sure you call swipeContainer.setRefreshing(false)
+                // once the network request has completed successfully.
+                swipeContainer.setRefreshing(false);
+                fetchHomeAsync(0);
+            }
+        });
+
+        // Configure the refreshing colors
+        swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_red_light);
 
         queryPosts();
     }
@@ -79,5 +100,16 @@ public class PostsFragment extends Fragment {
                 postAdapter.notifyDataSetChanged();
             }
         });
+    }
+
+    public void fetchHomeAsync(int page) {
+        // Remember to CLEAR OUT old items before appending in the new ones
+        postAdapter.clear();
+
+        // refresh the view so that all the new tweets and updates come in
+        queryPosts();
+
+        // Now we call setRefreshing(false) to signal refresh has finished
+        swipeContainer.setRefreshing(false);
     }
 }
