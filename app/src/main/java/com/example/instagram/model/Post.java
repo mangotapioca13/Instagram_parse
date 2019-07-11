@@ -35,8 +35,7 @@ public class Post extends ParseObject {
     }
 
     public String getTimeAgo() {
-        String time = getCreatedAt().toString();
-        return getRelativeTimeAgo(time);
+        return getRelativeTimeAgo(getCreatedAt().toString());
     }
 
     // setter methods
