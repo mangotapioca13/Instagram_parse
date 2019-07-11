@@ -11,7 +11,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
 
-//@Parcel
 @ParseClassName("Post")
 public class Post extends ParseObject {
 
