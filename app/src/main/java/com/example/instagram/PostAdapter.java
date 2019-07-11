@@ -70,6 +70,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
         public void bind(Post post) {
             tvUserName.setText(post.getUser().getUsername());
             tvDescription.setText(post.getDescription());
+            tvTimeAgo.setText(post.getTimeAgo());
 
             ParseFile image = post.getImage();
             if (image != null) {
