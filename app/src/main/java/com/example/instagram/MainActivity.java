@@ -1,3 +1,6 @@
+// Angela Liu
+// FBU 07112019
+
 package com.example.instagram;
 
 import android.content.Intent;
@@ -32,8 +35,13 @@ public class MainActivity extends AppCompatActivity {
             btnLogInSelect.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+//                    LoginFragment fragLogIn = new LoginFragment();
+//                    FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+//                    transaction.replace(R.id.flContainer, fragLogIn);
+//                    transaction.commit();
+                    Intent intent = new Intent(MainActivity.this, HomeActivity.class);
                     startActivity(intent);
+                    finish();
                 }
             });
 

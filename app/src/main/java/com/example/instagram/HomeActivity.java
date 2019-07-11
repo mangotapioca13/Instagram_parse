@@ -18,7 +18,6 @@ import com.parse.ParseUser;
 
 public class HomeActivity extends AppCompatActivity {
 
-    private final String TAG = "HomeActivity";
     private BottomNavigationView bottomNavigationView;
 
     @Override
@@ -38,20 +37,25 @@ public class HomeActivity extends AppCompatActivity {
                 switch (item.getItemId()) {
                     case R.id.miHome:
                         fragment = new PostsFragment();
+                        fragmentManager.beginTransaction().replace(R.id.flContainer, fragment).commit();
                         break;
                     case R.id.miCompose:
                         fragment = new ComposeFragment();
+                        fragmentManager.beginTransaction().replace(R.id.flContainer, fragment).commit();
                         break;
                     case R.id.miProfile:
                         fragment = new ProfileFragment();
+                        fragmentManager.beginTransaction().replace(R.id.flContainer, fragment).commit();
                         break;
                     case R.id.miLogOut:
                     default:
-                        fragment = new ProfileFragment();
+                        moveToLoginActivity();
+//                        ParseUser.logOut();
+//                        fragment = new LoginFragment();
                         break;
                 }
 
-                fragmentManager.beginTransaction().replace(R.id.flContainer, fragment).commit();
+//                fragmentManager.beginTransaction().replace(R.id.flContainer, fragment).commit();
                 return true;
             }
         });
@@ -82,5 +86,12 @@ public class HomeActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void moveToLoginActivity() {
+        ParseUser.logOut();
+        Intent intent = new Intent(HomeActivity.this, LoginActivity.class);
+        startActivity(intent);
+        finish();
     }
 }
