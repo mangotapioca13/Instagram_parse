@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.example.instagram.fragments.ComposeFragment;
 import com.example.instagram.fragments.PostsFragment;
+import com.example.instagram.fragments.ProfileFragment;
 import com.parse.ParseUser;
 
 public class HomeActivity extends AppCompatActivity {
@@ -43,7 +44,7 @@ public class HomeActivity extends AppCompatActivity {
                         break;
                     case R.id.miProfile:
                     default:
-                        fragment = new ComposeFragment();
+                        fragment = new ProfileFragment();
                         break;
                 }
 
