@@ -7,9 +7,7 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.example.instagram.fragments.ComposeFragment;
 import com.example.instagram.fragments.PostsFragment;
@@ -49,13 +47,10 @@ public class HomeActivity extends AppCompatActivity {
                         break;
                     case R.id.miLogOut:
                     default:
-                        moveToLoginActivity();
-//                        ParseUser.logOut();
-//                        fragment = new LoginFragment();
+                        moveToMainActivity();
                         break;
                 }
 
-//                fragmentManager.beginTransaction().replace(R.id.flContainer, fragment).commit();
                 return true;
             }
         });
@@ -64,33 +59,9 @@ public class HomeActivity extends AppCompatActivity {
         bottomNavigationView.setSelectedItemId(R.id.miHome);
     }
 
-    // methods to handle click on the LogOut menu item
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // inflate the menu; this adds items to the tool bar if it is present
-        getMenuInflater().inflate(R.menu.menu_home, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-
-        if (id == R.id.miLogOut) {
-            Toast.makeText(this, "LogOut Selected", Toast.LENGTH_SHORT).show();
-            ParseUser.logOut();
-            Intent intent = new Intent(HomeActivity.this, LoginActivity.class);
-            startActivity(intent);
-            finish();
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    private void moveToLoginActivity() {
+    private void moveToMainActivity() {
         ParseUser.logOut();
-        Intent intent = new Intent(HomeActivity.this, LoginActivity.class);
+        Intent intent = new Intent(HomeActivity.this, MainActivity.class);
         startActivity(intent);
         finish();
     }

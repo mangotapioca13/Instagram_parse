@@ -35,13 +35,8 @@ public class MainActivity extends AppCompatActivity {
             btnLogInSelect.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-//                    LoginFragment fragLogIn = new LoginFragment();
-//                    FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-//                    transaction.replace(R.id.flContainer, fragLogIn);
-//                    transaction.commit();
-                    Intent intent = new Intent(MainActivity.this, HomeActivity.class);
+                    Intent intent = new Intent(MainActivity.this, LoginActivity.class);
                     startActivity(intent);
-                    finish();
                 }
             });
 
