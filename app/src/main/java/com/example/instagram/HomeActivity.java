@@ -43,6 +43,9 @@ public class HomeActivity extends AppCompatActivity {
                         fragment = new ComposeFragment();
                         break;
                     case R.id.miProfile:
+                        fragment = new ProfileFragment();
+                        break;
+                    case R.id.miLogOut:
                     default:
                         fragment = new ProfileFragment();
                         break;

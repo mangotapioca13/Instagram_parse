@@ -17,4 +17,9 @@
         android:icon="@drawable/instagram_user_outline_24"
         android:title="Profile"
         app:showAsAction="always" />
+    <item
+        android:id="@+id/miLogOut"
+        android:icon="@drawable/logout"
+        android:title="Log Out"
+        app:showAsAction="always" />
 </menu>
