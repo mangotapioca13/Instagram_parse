@@ -11,6 +11,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
 
+//@Parcel
 @ParseClassName("Post")
 public class Post extends ParseObject {
 
@@ -18,6 +19,8 @@ public class Post extends ParseObject {
     public static final String KEY_CREATED_AT = "createdAt";
     public static final String KEY_IMAGE = "image";
     public static final String KEY_USER = "user";
+
+    public Post() { }
 
     // getter methods
     public String getDescription() {

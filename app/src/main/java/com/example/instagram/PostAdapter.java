@@ -1,6 +1,7 @@
 package com.example.instagram;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -12,6 +13,8 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.instagram.model.Post;
 import com.parse.ParseFile;
+
+import org.parceler.Parcels;
 
 import java.util.List;
 
@@ -50,7 +53,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
         return new ViewHolder(view);
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private TextView tvUserName;
         private TextView tvTimeAgo;
@@ -65,18 +68,35 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
             tvTimeAgo = (TextView) itemView.findViewById(R.id.tvTimeAgo);
             tvDescription = (TextView) itemView.findViewById(R.id.tvDescription);
             ivPostImage = (ImageView) itemView.findViewById(R.id.ivPostImage);
+
+            // attach a click listener to the entire row view
+            itemView.setOnClickListener((View.OnClickListener)this);
         }
 
         public void bind(Post post) {
             tvUserName.setText(post.getUser().getUsername());
             tvDescription.setText(post.getDescription());
-            tvTimeAgo.setText(post.getTimeAgo());
+            tvTimeAgo.setText("Posted " + post.getTimeAgo());
 
             ParseFile image = post.getImage();
             if (image != null) {
                 Glide.with(context)
                         .load(image.getUrl())
                         .into(ivPostImage);
+            }
+        }
+
+        // handles the row being clicked
+        @Override
+        public void onClick(View view) {
+            int position = getAdapterPosition();
+            if (position != RecyclerView.NO_POSITION) {
+                Post post = mPostsList.get(position);
+
+                // create intent for the new activity
+                Intent intent = new Intent(context, PostActivity.class);
+                intent.putExtra(Post.class.getSimpleName(), Parcels.wrap(post));
+                context.startActivity(intent);
             }
         }
     }
