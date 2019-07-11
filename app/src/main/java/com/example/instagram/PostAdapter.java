@@ -18,6 +18,8 @@ import org.parceler.Parcels;
 
 import java.util.List;
 
+import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
+
 public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
 
     private Context context;
@@ -59,6 +61,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
         private TextView tvTimeAgo;
         private TextView tvDescription;
         private ImageView ivPostImage;
+        private ImageView ivProfileImage;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -68,6 +71,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
             tvTimeAgo = (TextView) itemView.findViewById(R.id.tvTimeAgo);
             tvDescription = (TextView) itemView.findViewById(R.id.tvDescription);
             ivPostImage = (ImageView) itemView.findViewById(R.id.ivPostImage);
+            ivProfileImage = (ImageView) itemView.findViewById(R.id.ivProfileImage);
 
             // attach a click listener to the entire row view
             itemView.setOnClickListener((View.OnClickListener)this);
@@ -78,6 +82,16 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
             tvDescription.setText(post.getDescription());
             tvTimeAgo.setText("Posted " + post.getTimeAgo());
 
+            // configure image for profile picture
+            ParseFile propic = post.getProfileImage();
+            if (propic != null) {
+                Glide.with(context)
+                        .load(propic.getUrl())
+                        .bitmapTransform(new RoundedCornersTransformation(context, 100, 0))
+                        .into(ivProfileImage);
+            }
+
+            // configure image for post
             ParseFile image = post.getImage();
             if (image != null) {
                 Glide.with(context)

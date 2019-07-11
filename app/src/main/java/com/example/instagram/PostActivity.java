@@ -10,6 +10,8 @@ import com.example.instagram.model.Post;
 
 import org.parceler.Parcels;
 
+import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
+
 public class PostActivity extends AppCompatActivity {
 
     private TextView tvUsername;
@@ -38,6 +40,15 @@ public class PostActivity extends AppCompatActivity {
         tvTimeAgo.setText("Posted " + post.getTimeAgo());
         tvDescription.setText(post.getDescription());
 
+        // generate profile image
+        if (post.getProfileImage() != null) {
+            Glide.with(this)
+                    .load(post.getProfileImage().getUrl())
+                    .bitmapTransform(new RoundedCornersTransformation(this, 100, 0))
+                    .into(ivProfileImage);
+        }
+
+        // generate post's image
         if (post.getImage() != null) {
             Glide.with(this)
                     .load(post.getImage().getUrl())

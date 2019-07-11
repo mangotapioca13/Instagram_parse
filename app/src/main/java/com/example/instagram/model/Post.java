@@ -16,6 +16,7 @@ public class Post extends ParseObject {
 
     public static final String KEY_DESCRIPTION = "description";
     public static final String KEY_CREATED_AT = "createdAt";
+    public static final String KEY_PROFILE_IMAGE = "profileImage";
     public static final String KEY_IMAGE = "image";
     public static final String KEY_USER = "user";
 
@@ -29,6 +30,8 @@ public class Post extends ParseObject {
     public ParseFile getImage() {
         return getParseFile(KEY_IMAGE);
     }
+
+    public ParseFile getProfileImage() { return getUser().getParseFile(KEY_PROFILE_IMAGE); }
 
     public ParseUser getUser() {
         return getParseUser(KEY_USER);
@@ -46,6 +49,8 @@ public class Post extends ParseObject {
     public void setImage(ParseFile image) {
         put(KEY_IMAGE, image);
     }
+
+    public void setProfileImage(ParseFile propic) { put(KEY_CREATED_AT, propic); }
 
     public void setUser(ParseUser user) {
         put(KEY_USER, user);
