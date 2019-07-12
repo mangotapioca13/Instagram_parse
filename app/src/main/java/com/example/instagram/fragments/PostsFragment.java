@@ -168,8 +168,8 @@ public class PostsFragment extends Fragment {
 
                     Post post = posts.get(i);
                     mPostsList.add(post);
-                    postAdapter.notifyDataSetChanged();
                 }
+                postAdapter.notifyDataSetChanged();
             }
         });
     }

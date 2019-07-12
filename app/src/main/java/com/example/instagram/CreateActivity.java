@@ -55,7 +55,7 @@ public class CreateActivity extends AppCompatActivity {
         user.setEmail(email);
         user.setUsername(username);
         user.setPassword(password);
-        // how to set default image
+//        user.put("profileImage", new ParseFile());
 
         // invoke signUpInBackground
         user.signUpInBackground(new SignUpCallback() {
