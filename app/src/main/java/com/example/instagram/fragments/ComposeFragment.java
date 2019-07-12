@@ -20,6 +20,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.instagram.R;
@@ -41,6 +42,7 @@ public class ComposeFragment extends Fragment {
     private ImageView ivPostImage;
     private Button btnCreate;
     private Button btnTakePhoto;
+    public ProgressBar pb;
 
     public final static int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 1034;
     public String photoFileName = "photo.jpg";
@@ -64,6 +66,7 @@ public class ComposeFragment extends Fragment {
         ivPostImage = (ImageView) view.findViewById(R.id.ivPostImage);
         btnCreate = (Button) view.findViewById(R.id.btnCreate);
         btnTakePhoto = (Button) view.findViewById(R.id.btnTakePhoto);
+        pb = (ProgressBar) view.findViewById(R.id.pbLoading);
 
         btnTakePhoto.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -75,6 +78,9 @@ public class ComposeFragment extends Fragment {
         btnCreate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // on some click or some loading we need to wait for...
+                pb.setVisibility(ProgressBar.VISIBLE);
+
                 String description = etDescription.getText().toString();
                 ParseUser user = ParseUser.getCurrentUser();
 
@@ -84,6 +90,9 @@ public class ComposeFragment extends Fragment {
                     return;
                 }
                 savePost(description, user, photoFile);
+
+                // run a background job and once complete
+                pb.setVisibility(ProgressBar.INVISIBLE);
             }
         });
     }
